@@ -19,21 +19,37 @@ async function run() {
     try {
         await client.connect();
         console.log('mediTools db connected');
-        const ToolCollection = client.db('mediToolsDB').collection('product');
+        const toolCollection = client.db('mediToolsDB').collection('product');
+        const reviewCollection = client.db('mediToolsDB').collection('reviews');
 
         // tools product api
         app.post('/product', async (req, res) => {
             const query = req.body;
-            const product = await ToolCollection.insertOne(query);
+            const product = await toolCollection.insertOne(query);
             res.send(product);
         });
 
         // get product api from database
         app.get('/product', async (req, res) => {
             const query = {};
-            const product = await ToolCollection.find(query).toArray();
+            const product = await toolCollection.find(query).toArray();
             res.send(product);
         });
+
+        // post review api
+        app.post('/review', async (req, res) => {
+            const query = req.body;
+            const review = await reviewCollection.insertOne(query);
+            res.send(review);
+        });
+
+        // get review api
+        app.get('/review', async (req, res) => {
+            const query = {};
+            const review = await reviewCollection.find(query).toArray();
+            res.send(review);
+        });
+
 
     }
     finally {
