@@ -28,6 +28,13 @@ async function run() {
             res.send(product);
         });
 
+        // get product api from database
+        app.get('/product', async (req, res) => {
+            const query = {};
+            const product = await ToolCollection.find(query).toArray();
+            res.send(product);
+        });
+
     }
     finally {
 
