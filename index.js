@@ -105,11 +105,11 @@ async function run() {
             res.send(result);
         });
 
-        /*   app.get('/order', async (req, res) => {
-              const query = {};
-              const order = await orderColletion.find(query).toArray();
-              res.send(order);
-          }); */
+        app.get('/order', async (req, res) => {
+            const query = {};
+            const orders = await orderColletion.find(query).toArray();
+            res.send(orders);
+        });
 
         // order collection by email
         app.get('/order', verifyJWT, async (req, res) => {
