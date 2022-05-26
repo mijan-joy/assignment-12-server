@@ -105,7 +105,7 @@ async function run() {
             res.send(result);
         });
 
-        app.get('/order', async (req, res) => {
+        app.get('/order', verifyJWT, verifyAdmin, async (req, res) => {
             const query = {};
             const orders = await orderColletion.find(query).toArray();
             res.send(orders);
