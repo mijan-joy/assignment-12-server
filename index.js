@@ -39,6 +39,20 @@ async function run() {
         const orderColletion = client.db('mediToolsDB').collection('orders');
         const userColletion = client.db('mediToolsDB').collection('users');
 
+
+        // verify admin
+        const verifyAdmin = async (req, res, next) => {
+            const requester = req.decoded.email;
+            const requesterAccount = await userColletion.findOne({ email: requester });
+            if (requesterAccount.role === 'admin') {
+                next();
+            }
+            else {
+                res.status(403).send({ message: 'Forbidden' });
+            }
+        }
+
+
         // tools product api
         app.post('/product', async (req, res) => {
             const query = req.body;
