@@ -21,6 +21,7 @@ async function run() {
         console.log('mediTools db connected');
         const toolCollection = client.db('mediToolsDB').collection('product');
         const reviewCollection = client.db('mediToolsDB').collection('reviews');
+        const orderColletion = client.db('mediToolsDB').collection('orders');
 
         // tools product api
         app.post('/product', async (req, res) => {
@@ -56,6 +57,13 @@ async function run() {
             const query = {};
             const review = await reviewCollection.find(query).toArray();
             res.send(review);
+        });
+
+        // order post api
+        app.post('/order', async (req, res) => {
+            const order = req.body;
+            const result = await orderColletion.insertOne(order);
+            res.send(result);
         });
 
 
