@@ -67,6 +67,15 @@ async function run() {
             res.send(product);
         });
 
+
+        // delete product api
+        app.delete('/product/:email', verifyJWT, verifyAdmin, async (req, res) => {
+            const email = req.params.email;
+            const filter = { email: email };
+            const result = await toolCollection.deleteOne(filter);
+            res.send(result);
+        });
+
         // get product api by id from database
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
